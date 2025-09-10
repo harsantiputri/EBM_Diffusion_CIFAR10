@@ -2,9 +2,6 @@
 
 This repository contains the code for training an Energy-Based Model (EBM) using a modern, stable objective derived from Denoising Score Matching (the same principle behind DDPMs) on the CIFAR-10 dataset.
 
-![Sample Output](outputs/ddim_sharp_sample.png)
-*(Note: To show an image like this, create a good sample with `sample.py`, move it to the `outputs` folder, and `git add outputs/ddim_sharp_sample.png` and commit it. Your `.gitignore` allows this because we didn't use a trailing slash `outputs/`)*
-
 ## Key Features
 - **Model:** A U-Net architecture implicitly defines the time-dependent energy function.
 - **Training:** Uses a stable denoising score-matching objective, avoiding unstable MCMC sampling during training.
