@@ -39,3 +39,13 @@ This repository contains the code for training an Energy-Based Model (EBM) using
 To train a new model from scratch:
 ```bash
 python main.py --epochs 300 --batch-size 128 --learning-rate 1e-4
+```
+To resume training from a checkpoint:
+```bash
+python main.py --epochs 500 --resume_checkpoint weights/model_final.pth
+```
+Monitor training progress with TensorBoard:
+```bash
+# In a separate terminal
+tensorboard --logdir=runs
+```
