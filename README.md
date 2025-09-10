@@ -2,6 +2,7 @@
 
 This repository contains the code for training an Energy-Based Model (EBM) using a modern, stable objective derived from Denoising Score Matching (the same principle behind DDPMs) on the CIFAR-10 dataset.
 
+<<<<<<< Updated upstream
 ## Key Features
 - **Model:** A U-Net architecture implicitly defines the time-dependent energy function.
 - **Training:** Uses a stable denoising score-matching objective, avoiding unstable MCMC sampling during training.
@@ -10,6 +11,17 @@ This repository contains the code for training an Energy-Based Model (EBM) using
 
 ## Setup
 
+=======
+
+## Key Features
+- **Model:** A U-Net architecture implicitly defines the time-dependent energy function.
+- **Training:** Uses a stable denoising score-matching objective, avoiding unstable MCMC sampling during training.
+- **Sampling:** Includes both a standard DDPM sampler and a faster, higher-quality DDIM sampler.
+- **Monitoring:** Integrated with TensorBoard for live monitoring of loss and generated image quality.
+
+## Setup
+
+>>>>>>> Stashed changes
 1.  **Clone the repository:**
     ```bash
     git clone https://github.com/YOUR_USERNAME/EBM_Diffusion_CIFAR10.git
@@ -48,4 +60,8 @@ Monitor training progress with TensorBoard:
 ```bash
 # In a separate terminal
 tensorboard --logdir=runs
+<<<<<<< Updated upstream
 ```
+=======
+```
+>>>>>>> Stashed changes

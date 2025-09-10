@@ -1,35 +1,52 @@
 # EBM Training with Diffusion Objective on CIFAR-10
 
-This project demonstrates how to train an Energy-Based Model (EBM) using a modern, stable objective derived from Denoising Score Matching, which is the core principle behind Denoising Diffusion Probabilistic Models (DDPMs).
+This repository contains the code for training an Energy-Based Model (EBM) using a modern, stable objective derived from Denoising Score Matching (the same principle behind DDPMs) on the CIFAR-10 dataset.
 
-## Core Idea
 
-Instead of using traditional contrastive divergence with MCMC for training, which can be unstable, we train a neural network to approximate the score function ($\nabla_x \log p(x)$) of the data distribution at various noise levels. For an EBM where $p(x) \propto \exp(-E(x))$, the score is simply the negative gradient of the energy: $-\nabla_x E(x)$.
+## Key Features
+- **Model:** A U-Net architecture implicitly defines the time-dependent energy function.
+- **Training:** Uses a stable denoising score-matching objective, avoiding unstable MCMC sampling during training.
+- **Sampling:** Includes both a standard DDPM sampler and a faster, higher-quality DDIM sampler.
+- **Monitoring:** Integrated with TensorBoard for live monitoring of loss and generated image quality.
 
-The training process is as follows:
-1.  **Forward Process:** Take a real image from CIFAR-10 and add a known amount of Gaussian noise based on a random timestep `t`.
-2.  **Training Objective:** Train a U-Net model to predict the noise that was added. The loss is a simple Mean Squared Error (MSE) between the true noise and the predicted noise. This objective effectively trains the model to learn the score function.
-3.  **Sampling:** To generate new images, we start with pure Gaussian noise and iteratively apply the learned model to denoise the image over `T` steps, reversing the forward process.
+## Setup
 
-This method is powerful because it replaces the unstable MCMC sampling loop during training with a simple and efficient denoising objective.
+1.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/YOUR_USERNAME/EBM_Diffusion_CIFAR10.git
+    cd EBM_Diffusion_CIFAR10
+    ```
 
-## Project Structure
+2.  **Create and activate a virtual environment:**
+    ```bash
+    python3 -m venv venv
+    source venv/bin/activate
+    ```
 
-- `main.py`: The main script for training the model, handling data loading, and saving samples.
-- `diffusion.py`: Contains the logic for the diffusion process (noise scheduling, forward noising, and reverse sampling).
-- `model.py`: Defines the U-Net architecture with time embeddings.
-- `requirements.txt`: Python dependencies.
-
-## How to Run
-
-1.  **Install dependencies:**
+3.  **Install dependencies:**
     ```bash
     pip install -r requirements.txt
     ```
 
-2.  **Start training:**
+4.  **Install Git LFS to download the model weights:**
     ```bash
-    python main.py --epochs 100 --batch-size 128 --learning-rate 1e-3
+    git lfs install
+    git lfs pull
     ```
 
-Training will create an `outputs/` directory to save generated image samples periodically and a `checkpoints/` directory for model weights.
+## How to Run
+
+### Training
+To train a new model from scratch:
+```bash
+python main.py --epochs 300 --batch-size 128 --learning-rate 1e-4
+```
+To resume training from a checkpoint:
+```bash
+python main.py --epochs 500 --resume_checkpoint weights/model_final.pth
+```
+Monitor training progress with TensorBoard:
+```bash
+# In a separate terminal
+tensorboard --logdir=runs
+```
